@@ -1,0 +1,29 @@
+{
+  "propertyKeys": [
+    {"name": "name", "dataType": "String", "cardinality": "SINGLE"},
+    {"name": "value", "dataType": "String", "cardinality": "SINGLE"}
+  ],
+  "vertexLabels": [
+    {"name": "company"},
+    {"name": "product"},
+    {"name": "subProduct"},
+	{"name": "issues"},
+	{"name": "timelineYear"},
+	{"name": "timelineMonth"},
+	{"name": "timelineDay"},
+	{"name": "issue"},
+	{"name": "subIssue"},
+	{"name": "state"},
+	{"name": "zip"}
+  ],
+  "edgeLabels": [
+    {"name": "hasProduct", "multiplicity": "MULTI"},
+    {"name": "hasSubProduct", "multiplicity": "MULTI"},
+    {"name": "hasIssues", "multiplicity": "MULTI"},
+    {"name": "hasTimelines", "multiplicity": "MULTI"},
+    {"name": "next", "multiplicity": "MULTI"}
+  ],
+  "vertexIndexes": [
+    {"name": "vByName", "propertyKeys": ["name"], "composite": true, "unique": true}
+  ]
+}
