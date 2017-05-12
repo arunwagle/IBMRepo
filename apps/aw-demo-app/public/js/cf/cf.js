@@ -12,27 +12,95 @@ $(document).ready(function() {
 
   });
 
+  $('#deleteGraphButton').click(function() {
+    console.log('Clicked delete graph button' );
+    deleteGraphButton();
+  });
+
+
   $('#createGraphSchemaButton').click(function() {
     console.log('Clicked create schema button' );
     var graphId = $('#ccGraphId').val().trim();
-    // console.log('CC graphName=' + graphName);
+    console.log('CC graphId=' + graphId);
 
     createSchema(graphId);
 
   });
 
+  $('#loadVertexButton').click(function() {
+    console.log('Clicked load vertext button' );
+    loadVertexData();
+
+  });
+
+  $('#loadEdgesButton').click(function() {
+    console.log('Clicked load Edges button' );
+    loadEdgesData();
+
+  });
+
+  $('#loadIssuesButton').click(function() {
+    console.log('Clicked load Issues button' );
+    loadIssuesData();
+
+  });
+
+
   $('#startConsumerButton').click(function() {
     console.log('Clicked start Kafka Consumer' );
     startConsumer();
-
   });
 
   $('#stopConsumerButton').click(function() {
     console.log('Clicked stop Kafka Consumer' );
     stopConsumer();
-
   });
 
+
+
+  function loadVertexData(){
+    $.ajax({
+      url: "/cf/cc/loadVertexData",
+      type: "POST",
+      cache: false,
+      dataType: "json"
+    }).success(function(data) {
+      console.log(data);
+    }).fail(_error);
+  }
+
+  function loadEdgesData(){
+    $.ajax({
+      url: "/cf/cc/loadEdgesData",
+      type: "POST",
+      cache: false,
+      dataType: "json"
+    }).success(function(data) {
+      console.log(data);
+    }).fail(_error);
+  }
+
+  function loadIssuesData(){
+    $.ajax({
+      url: "/cf/cc/loadIssuesData",
+      type: "POST",
+      cache: false,
+      dataType: "json"
+    }).success(function(data) {
+      console.log(data);
+    }).fail(_error);
+  }
+
+  function deleteGraphButton(){
+    $.ajax({
+      url: "/cf/cc/deleteGraph",
+      type: "POST",
+      cache: false,
+      dataType: "json"
+    }).success(function(data) {
+      console.log(data);
+    }).fail(_error);
+  }
 
   function startConsumer(){
     $.ajax({
@@ -69,18 +137,6 @@ $(document).ready(function() {
     }).fail(_error);
   }
 
-  function createGraph(graphName){
-    $.ajax({
-      url: "/cf/cc/createGraph",
-      type: "POST",
-      cache: false,
-      contentType: "application/json",
-      dataType: "json",
-      data: '{"id":' + JSON.stringify(graphName) + '}'
-    }).success(function(data) {
-      console.log("Create Graph successful" + data);
-    }).fail(_error);
-  }
 
   function createSchema(graphId){
     $.ajax({

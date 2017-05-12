@@ -1,136 +1,157 @@
-.tooltip.in {
-  background: rgb(50, 50, 50) none repeat scroll 0% 0%;
-  color: #F7F7F7;
-  padding: 8px;
-  max-width: 400px;
-  margin: 30px;
+
+/*============================================================
+LOGO
+============================================================*/
+
+.top-nav--logo-wdc {
+  color: #5aaafa !important;
 }
 
-.btn {
-  height: 2.5em;
-  padding: 0em;
-  margin-bottom: 0em;
+
+/*============================================================
+GENERAL STYLES
+============================================================*/
+body {
+  overflow-x: hidden; /* Prevent scroll on narrow devices */
 }
-.btn-block {
-  margin-bottom: 0em;
+body {
+  padding-top: 70px;
 }
-.content {
-  margin-bottom: 0px;
+footer {
+  padding: 30px 0;
 }
 
-.wordsCount {
-  padding-bottom: 5px;
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 767px) {
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all .25s ease-out;
+         -o-transition: all .25s ease-out;
+            transition: all .25s ease-out;
+  }
+
+  .sidebar-offcanvas {
+    position: absolute;
+    width: 60%; /* 6 columns */
+    display: none;
+  }
+
+  .row-offcanvas-right {
+    right: 0;
+  }
+
+  .row-offcanvas-right.active
+  .sidebar-offcanvas {
+    display: block;
+    right: 0;
+    top: 0;
+    z-index: 1;
+  }
+
+  .row-offcanvas-right.active {
+
+  }
+
 }
 
-.model_title {
-    font-weight: bold;
-    padding-left: 0px;
-    padding-top: 5px;
+.db-wrapper {
+    font-family: Arial;
+}
+/*============================================================
+BACKGROUND COLORS
+============================================================*/
+.db-bk-color-one {
+    background-color: #f55039;
 }
 
-.model_trait {
-    padding-left: 10px;
+.db-bk-color-two {
+    background-color: #337ab7;
 }
 
-.model_name {
-    background-color: #ccc;
-    margin-top: 10px;
+.db-bk-color-three {
+    background-color: #47887E;
+}
+/*============================================================
+BUTTONS STYLES
+============================================================*/
+
+.db-button-color-one {
+    border: none;
+    background-color: #f55039;
+    color: #fff;
 }
 
-.theader {
-    background-color: #bbb;
-    font-weight: bold;
-    padding-left: 0px;
-    padding-bottom: 5px;
-}
-.col555px {
-    height: 555px;
-    overflow: auto;
-}
-
-.errorMsg {
-    font-weight: bold;
-    color: red;
-}
-
-.results > .row {
-  clear: left;
-}
-
-.control-label {
-  font-weight: bold;
-}
-
-#vizcontainer svg {
-  min-width: 480px;
-  width: 100%;
-  height: 100%;
-}
-.sample-radio-list {
-  margin-bottom: 10px;
-}
-.sample-radio-container {
-  display: inline-block;
-  margin-left: 10px;
-}
-input[type="radio"] {
-  margin:3px 5px 0px 0px;
-}
-.buttons-container {
-  margin-top: 15px;
-}
-/* Portrait tablets and small desktops */
-@media (max-width: 1200px) {
-    .col555px {
-        height: 100%;
+    .db-button-color-one:hover, .db-button-color-one:focus {
+        color: #fff;
     }
+
+.db-button-color-two {
+    border: none;
+    background-color: #46A6F7;
+    color: #fff;
 }
 
-.tab-panels {
-  background-color: #f4f4f4;
-  border: 2px solid #ececec;
-  padding: 0 1rem 1rem;
-  margin-top: 2rem;
-}
-.tab-panels--tab-list {
-  border-bottom: 2px solid #ececec;
-}
-.tab-panels--tab-list-item {
-  display: inline-block;
-  margin-top: 1rem;
-}
-.tab-panels--tab {
-  display: block;
-  text-decoration: none;
-  padding: 0 1rem 1rem;
-}
-.tab-panels--tab:focus, .tab-panels--tab:hover {
-  border-bottom: 6px solid #d74108;
-  color: #d74108;
-}
-.tab-panels--tab.active {
-  font-weight: 700;
-  border-bottom: 6px solid #d74108;
-}
-.tab-panels--tab-content .base--textarea {
-  min-height: 11.7rem;
-  margin-top: 0;
-}
-.tab-panels--tab-pane {
-  display: none;
-  margin-top: 0;
-}
-.tab-panels--tab-pane.active {
-  display: block;
+    .db-button-color-two:hover, .db-button-color-two:focus {
+        color: #fff;
+    }
+
+.db-button-color-three {
+    border: none;
+    background-color: #47887E;
+    color: #fff;
 }
 
-.element-relations {
-  border: 2px solid #c0e6ff;
+    .db-button-color-three:hover, .db-button-color-three:focus {
+        color: #fff;
+    }
+/*============================
+PRICING TABLES NINE STYLES
+==============================*/
+
+.db-pricing-nine {
+    border: 1px solid #EDEDED;
+    margin-bottom: 30px;
 }
 
-.base--thead {
-  font-weight: bold;
-  color: #325c80;
-  border-bottom: 1px solid #d5d6d5;
-  background-color: #ffffff;
+.db-width-perticular {
+    width: 300px;
+}
+
+.db-pricing-nine .table {
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.db-pricing-nine thead tr th {
+    font-weight: normal;
+    font-weight: normal;
+    height: 72px;
+    vertical-align: middle;
+    text-align: center;
+    color: #fff;
+}
+
+.db-pricing-nine i.icon-red {
+    color: rgb(250, 57, 57);
+}
+
+.db-pricing-nine i.icon-green {
+    color: #00E025;
+}
+
+/*
+TABS
+*/
+
+#exTab1 .tab-content {
+  color : white;
+  background-color: #fff;
+  padding : 2px;
+}
+
+#exTab1 .nav-pills > li > a {
+  border-radius: 0;
 }

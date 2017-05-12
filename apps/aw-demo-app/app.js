@@ -34,7 +34,7 @@ require('./config/express')(app);
 
 // require('./config/ibmgraph')(app);
 
-require('./routes/consumerFinance')(app);
+require('./routes/node_cf')(app);
 //
 // require('./routes/generic')(app);
 
@@ -54,40 +54,39 @@ app.get('/', function(req, res) {
   res.render('home');
 });
 
-app.get('/gh', function(req, res) {
-  res.render('genericHome');
-});
+// app.get('/gh', function(req, res) {
+//   res.render('genericHome');
+// });
 
 app.get('/mh', function(req, res) {
-  res.render('mortgageHome');
+  res.render('mh');
 });
 
 app.get('/ih', function(req, res) {
-  res.render('insHome');
+  res.render('ih');
 });
 
 app.get('/cf', function(req, res) {
-  res.render('cfHome');
+  res.render('cf');
 });
 
 app.get('/cc', function(req, res) {
-  res.render('ccHome');
+  res.render('cc');
 });
 
-app.get('/ccSettings', function(req, res) {
-  res.render('ccSettings');
+app.get('/settings', function(req, res) {
+  res.render('settings');
 });
 
+app.get('/watsonsettings', function(req, res) {
+  res.render('watsonsettings');
+});
 
 app.get('/ah', function(req, res) {
   res.render('alchemyHome');
 });
 app.get('/carAccident-nlp', function(req, res) {
   res.render('carAccident-nlp');
-});
-
-app.get('/settings', function(req, res) {
-  res.render('settings');
 });
 
 

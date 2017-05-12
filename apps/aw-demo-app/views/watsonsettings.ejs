@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
-
+<html data-ng-app="myApp" data-ng-controller="appCtrl">
 <head>
   <meta charset="utf-8">
   <meta content="text/html; charset=UTF-8" name="Content-Type" />
@@ -24,9 +23,23 @@
   <script type="text/javascript" src="/js/string-utils.js"></script>
   <script type="text/javascript" src="/js/i18n.js"></script>
 
+  <!-- <script>
+  $(document).ready(function () {
+    $('[data-toggle="offcanvas"]').click(function () {
+      $('.row-offcanvas').toggleClass('active')
+    });
+  });
+  </script> -->
+
+
+
 </head>
 
+
+
 <body>
+
+<div id="container">
   <nav class="navbar navbar-fixed-top navbar-inverse">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -40,9 +53,12 @@
           </div>
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li class="active">
+              <li>
                 <a href="/" role="menuitem">Home</a>
               </li>
+              <!-- <li>
+                <a href="/gh" role="menuitem">Generic</a>
+              </li> -->
               <li>
                 <a href="/mh" role="menuitem">Mortgage</a>
               </li>
@@ -52,7 +68,7 @@
               <li>
                 <a href="/cf" role="menuitem">Consumer Finance</a>
               </li>
-              <li>
+              <li class="active">
                 <a href="/settings" role="menuitem" style="color:red !important">Settings</a>
               </li>
 
@@ -61,51 +77,48 @@
         </div><!-- /.container -->
   </nav><!-- /.navbar -->
 
+  <div class="container-fluid">
+        <div class="row row-offcanvas row-offcanvas-right">
+          <div class="col-xs-12 col-sm-9 col-sm-push-3">
+            <p class="pull-right visible-xs">
+              <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas" title="Toggle sidebar"><i class="fa fa-chevron-right"></i></button>
+            </p>
+            <div class="jumbotron">
+              <h1>Watson Settings</h1>
+              <p>Watson API settings.</p>
+            </div>
+            <div class="row">
 
-<div class="row header">
-    <div class="container">
+              <div class="col-xs-4 col-lg-4">
+                  <p>
+                    <a id="watsonknowledgestudio" name="watsonknowledgestudio" class="btn btn-warning" target="_blank" href="https://gateway.watsonplatform.net/knowledge-studio/ui/dashboard/?subscriptionID=501946978" role="button">Watson Knowledge Studio</a>
+                    <a id="watsonresources" name="watsonresources" class="btn btn-warning" target="_blank" href="https://github.com/arunwagle/IBMRepo/tree/master/WatsonDevelopeStudio" role="button">Github</a>
+                  </p>
+              </div><!--/.col-xs-6.col-lg-4-->
 
-      <div class="avatar img-container col-lg-2 col-md-2 col-sm-2 hidden-xs">
-        <img src="/images/app.png" class="service-icon">
-      </div>
 
-      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 dialog-description">
-        <h1 style="font-size:50px;" class="service-title">Financial Demos</h1>
-        <div class="resource-item-container">
-              <div class="resource-item">Demos showcasing IBM's Data First Methodlology and Watson Data Platform. </div>
-        </div>
-    </div>
-  </div>
-</div>
+            </div><!--/row 1-->
 
-<div class="row">
-    <div class="container">
-        <div class="input-panel">
-          <h2 class="base--h2">Watson Data Platform</h2>
-          <div class="row">
-            <img  class="col-lg-10 col-md-10 col-sm-10 col-xs-10" src="/images/WDP.png">
-          </div>
-        </div>
 
-        <div class="input-panel">
-          <h2 class="base--h2">IBM's Data First Method</h2>
-          <div class="row">
-            <img  class="col-lg-10 col-md-10 col-sm-10 col-xs-10" src="/images/IBMDataFirst.png"">
-          </div>
-        </div>
+          </div><!--/.col-xs-12.col-sm-9-->
 
-    </div>
-  </div>
+          <div class="col-xs-6 col-sm-3 col-sm-pull-9 sidebar-offcanvas" id="sidebar">
+            <div class="list-group">
+              <a href="/settings" class="list-group-item">Graph Setup</a>
+              <a href="/watsonsettings" class="list-group-item active">Watson Setup</a>
+            </div>
+          </div><!--/.sidebar-offcanvas-->
+        </div><!--/row-->
 
-  <div class="row">
-    <!-- Footer goes here -->
-  </div>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
-  <script type="text/javascript" src="/js/mortgage/alchemy.js"></script>
-  <script type="text/javascript" src="/js/string-utils.js"></script>
-  <script type="text/javascript" src="/js/i18n.js"></script>
+        <!-- <hr>
+
+        <footer>
+          <p>&copy; 2015 Company, Inc.</p>
+        </footer> -->
+
+  </div><!--/.container-fluid-->
+
+</div><!--/.container-->
 
 </body>
-
 </html>

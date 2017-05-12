@@ -10,7 +10,7 @@ $(document).ready(function() {
   // $('#div2').hide();
 
 
-  var modelId = "d6e8045e-a060-4e45-9dda-2c84cce079aa";
+  var modelId = "937a4c50-7467-45cf-b08a-3c1ed98114ab";
 
   $('.ml-item').click(function() {
     $('.1-result').hide();

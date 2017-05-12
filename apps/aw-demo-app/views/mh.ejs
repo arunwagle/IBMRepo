@@ -27,7 +27,8 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-fixed-top navbar-inverse">
+  <div id="container">
+    <nav class="navbar navbar-fixed-top navbar-inverse">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -40,10 +41,10 @@
           </div>
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li class="active">
+              <li>
                 <a href="/" role="menuitem">Home</a>
               </li>
-              <li>
+              <li class="active">
                 <a href="/mh" role="menuitem">Mortgage</a>
               </li>
               <li>
@@ -53,59 +54,37 @@
                 <a href="/cf" role="menuitem">Consumer Finance</a>
               </li>
               <li>
-                <a href="/settings" role="menuitem" style="color:red !important">Settings</a>
+                <a href="/ccsettings" role="menuitem" style="color:red !important">Settings</a>
               </li>
 
             </ul>
           </div><!-- /.nav-collapse -->
         </div><!-- /.container -->
   </nav><!-- /.navbar -->
-
-
-<div class="row header">
-    <div class="container">
-
-      <div class="avatar img-container col-lg-2 col-md-2 col-sm-2 hidden-xs">
-        <img src="/images/app.png" class="service-icon">
-      </div>
-
-      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 dialog-description">
-        <h1 style="font-size:50px;" class="service-title">Financial Demos</h1>
-        <div class="resource-item-container">
-              <div class="resource-item">Demos showcasing IBM's Data First Methodlology and Watson Data Platform. </div>
-        </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-    <div class="container">
-        <div class="input-panel">
-          <h2 class="base--h2">Watson Data Platform</h2>
-          <div class="row">
-            <img  class="col-lg-10 col-md-10 col-sm-10 col-xs-10" src="/images/WDP.png">
+    <div class="container-fluid">
+      <div class="row row-offcanvas row-offcanvas-right">
+        <div class="col-xs-12 col-sm-9 col-sm-push-3">
+          <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas" title="Toggle sidebar"><i class="fa fa-chevron-right"></i></button>
+          </p>
+          <div class="jumbotron">
+            <h1>TODO</h1>
+            <p>Use case Description.</p>
           </div>
-        </div>
-
-        <div class="input-panel">
-          <h2 class="base--h2">IBM's Data First Method</h2>
           <div class="row">
-            <img  class="col-lg-10 col-md-10 col-sm-10 col-xs-10" src="/images/IBMDataFirst.png"">
+          </div><!--/row 1-->
+
+        </div><!--/.col-xs-12.col-sm-9-->
+
+        <div class="col-xs-6 col-sm-3 col-sm-pull-9 sidebar-offcanvas" id="sidebar">
+          <div class="list-group">
+            <a href="#" class="list-group-item active">TODO</a>
           </div>
-        </div>
+        </div><!--/.sidebar-offcanvas-->
+      </div><!--/row-->
+    </div><!--/.container-fluid-->
 
-    </div>
-  </div>
-
-  <div class="row">
-    <!-- Footer goes here -->
-  </div>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
-  <script type="text/javascript" src="/js/mortgage/alchemy.js"></script>
-  <script type="text/javascript" src="/js/string-utils.js"></script>
-  <script type="text/javascript" src="/js/i18n.js"></script>
-
+  </div><!--/.container-->
 </body>
 
 </html>
