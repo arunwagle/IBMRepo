@@ -26,17 +26,17 @@ Currently we have created a simple chatbot but eventually we will acheive the be
 ## Run locally
 > NOTE: These steps are only needed when running locally instead of using the ``Deploy to IBM Cloud`` button.
 
-1. [Clone the repo](#1-clone-the-repo)
-2. [Create Watson services with IBM Cloud](#2-create-watson-services-with-ibm-bluemix)
-3. [Configure credentials](#5-configure-credentials)
-4. [Run the application](#6-run-the-application)
+1. Clone the repo
+2. Create Watson services with IBM Cloud
+3. Configure credentials
+4. Run the application
 
 ### 1. Clone the repo
 
 Clone the `watson-banking-chatbot` locally. In a terminal, run:
 
 ```
-$ git clone https://github.com/IBM/watson-banking-chatbot
+$ git clone https://github.com/arunwagle/IBMRepo.git
 ```
 
 We’ll be using the file [`data/conversation/workspaces/banking.json`](data/conversation/workspaces/banking.json) and the folder
@@ -47,9 +47,6 @@ We’ll be using the file [`data/conversation/workspaces/banking.json`](data/con
 Create the following services:
 
 * [**Watson Assistant**](https://console.ng.bluemix.net/catalog/services/conversation)
-* [**Watson Discovery**](https://console.ng.bluemix.net/catalog/services/discovery)
-* [**Watson Tone Analyzer**](https://console.ng.bluemix.net/catalog/services/tone-analyzer)
-* [**Watson Natural Language Understanding**](https://console.ng.bluemix.net/catalog/services/natural-language-understanding)
 
 ### 3. Import the Assistant workspace
 
@@ -72,18 +69,6 @@ workspace and select **View details**. Save this ID for later.
 
 ![](doc/source/images/dialog.png)
 
-### 4. Load the Discovery documents
-
-Launch the **Watson Discovery** tool. Create a **new data collection**
-and give the data collection a unique name.
-
-<p align="center">
-  <img width="400" src="doc/source/images/new_collection.png">
-</p>
-
-> Save the **environment_id** and **collection_id** for your `.env` file in the next step.
-
-Under `Add data to this collection` use `Drag and drop your documents here or browse from computer` to seed the content with the five documents in `data/discovery/docs`.
 
 ### 5. Configure credentials
 
@@ -113,19 +98,6 @@ CONVERSATION_USERNAME=<add_conversation_username>
 CONVERSATION_PASSWORD=<add_conversation_password>
 WORKSPACE_ID=<add_conversation_workspace>
 
-# Watson Discovery
-DISCOVERY_USERNAME=<add_discovery_username>
-DISCOVERY_PASSWORD=<add_discovery_password>
-DISCOVERY_ENVIRONMENT_ID=<add_discovery_environment>
-DISCOVERY_COLLECTION_ID=<add_discovery_collection>
-
-# Watson Natural Language Understanding
-NATURAL_LANGUAGE_UNDERSTANDING_USERNAME=<add_nlu_username>
-NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD=<add_nlu_password>
-
-# Watson Tone Analyzer
-TONE_ANALYZER_USERNAME=<add_tone_analyzer_username>
-TONE_ANALYZER_PASSWORD=<add_tone_analyzer_password>
 
 # Run locally on a non-default port (default is 3000)
 # PORT=3000
