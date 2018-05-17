@@ -84,17 +84,30 @@
               <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas" title="Toggle sidebar"><i class="fa fa-chevron-right"></i></button>
             </p>
             <div class="jumbotron">
-              <h1>Watson Settings</h1>
-              <p>Watson API settings.</p>
+              <h1>Upload Settings</h1>
+              <p>Upload files</p>
             </div>
             <div class="row">
+              <div class="col-xs-4 col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <form action="/cf/cc/uploadFile" method="post" enctype="multipart/form-data">
+                        <div class="input-group">
+                          <label class="input-group-btn">
+                              <span class="btn btn-primary">
+                                  <input multiple="" type="file" name="file"  id="file">
+                              </span>
+                          </label>
+                          <!-- <input class="form-control" readonly="" type="text"> -->
+                        </div>
 
-              <div class="col-xs-4 col-lg-4">
-                  <p>
-                    <a id="watsonknowledgestudio" name="watsonknowledgestudio" class="btn btn-warning" target="_blank" href="https://gateway.watsonplatform.net/knowledge-studio/ui/dashboard/?subscriptionID=501946978" role="button">Watson Knowledge Studio</a>
-                    <a id="watsonresources" name="watsonresources" class="btn btn-warning" target="_blank" href="https://github.com/arunwagle/IBMRepo/tree/master/WatsonDevelopeStudio" role="button">Github</a>
-                  </p>
-              </div><!--/.col-xs-6.col-lg-4-->
+                        <div>
+                          <input type="submit" value="Upload" id="uploadFileButton" name="uploadFileButton" class="btn btn-warning" role="button">
+                        </div>
+                      </form>
+                  </div>
+                </div>
+              </div>
 
 
             </div><!--/row 1-->
@@ -105,8 +118,8 @@
           <div class="col-xs-6 col-sm-3 col-sm-pull-9 sidebar-offcanvas" id="sidebar">
             <div class="list-group">
               <a href="/settings" class="list-group-item">Graph Setup</a>
-              <a href="/watsonsettings" class="list-group-item active">Watson Setup</a>
-              <a href="/uploadsettings" class="list-group-item">Upload</a>
+              <a href="/watsonsettings" class="list-group-item">Watson Setup</a>
+              <a href="/uploadsettings" class="list-group-item active">Upload</a>
             </div>
           </div><!--/.sidebar-offcanvas-->
         </div><!--/row-->

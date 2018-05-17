@@ -1,6 +1,7 @@
 {
   "propertyKeys": [
     {"name": "name", "dataType": "String", "cardinality": "SINGLE"},
+    {"name": "type", "dataType": "String", "cardinality": "SINGLE"},
     {"name": "pid", "dataType": "String", "cardinality": "SINGLE"},
     {"name": "rev", "dataType": "String", "cardinality": "SINGLE"},
     {"name": "issue", "dataType": "String", "cardinality": "SINGLE"},
@@ -28,6 +29,6 @@
     {"name": "is_issue", "multiplicity": "MULTI"}
   ],
   "vertexIndexes": [
-    {"name": "vByName", "propertyKeys": ["name"], "composite": true, "unique": false}
+    {"name": "vByName", "propertyKeys": ["name","type"], "composite": true, "unique": true}
   ]
 }

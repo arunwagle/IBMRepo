@@ -1,0 +1,56 @@
+paths: {}
+definitions: {}
+basePath: /api
+swagger: '2.0'
+info:
+  x-ibm-name: uploadcsv
+  version: 1.0.0
+  title: UploadCSV
+schemes:
+  - https
+host: $(catalog.host)
+produces:
+  - application/csv
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+  clientSecretHeader:
+    in: header
+    name: X-IBM-Client-Secret
+    type: apiKey
+security:
+  - clientIdHeader: []
+    clientSecretHeader: []
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  cors:
+    enabled: true
+  catalogs:
+    apic-dev:
+      properties:
+        runtime-url: $(TARGET_URL)
+    sb:
+      properties:
+        runtime-url: 'http://localhost:4001'
+    sandbox:
+      properties:
+        app-server: 'https://xyz'
+  assembly:
+    execute:
+      - proxy:
+          title: proxy
+          timeout: 60
+          verb: keep
+          cache-response: protocol
+          cache-ttl: 900
+          version: 1.0.0
+          target-url: '${app_server}/${request.path}'
+  gateway: datapower-gateway
+  properties:
+    app-server:
+      value: 'https://null'
+      description: ''
+      encoded: false

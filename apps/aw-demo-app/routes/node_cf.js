@@ -1,6 +1,7 @@
 'use strict';
 
-var ibmGraphSvc = require('./node_ibmgraph.js');
+var ibmGraphSvc = require('./node_ibmgraph_async.js');
+var ibmObjectStorageSvc = require('./node_objstorage.js');
 
 module.exports = function (app) {
 
@@ -32,8 +33,20 @@ module.exports = function (app) {
     return res.json(resp);
   });
 
+  app.post('/cf/cc/prepareEdgesData', function(req, res, next) {
+    var resp = ibmGraphSvc.prepareEdgesData();
+    console.log("resp=" + resp);
+    return res.json(resp);
+  });
+
   app.post('/cf/cc/loadEdgesData', function(req, res, next) {
     var resp = ibmGraphSvc.loadEdgesData();
+    console.log("resp=" + resp);
+    return res.json(resp);
+  });
+
+  app.post('/cf/cc/prepareIssuesData', function(req, res, next) {
+    var resp = ibmGraphSvc.prepareIssuesData();
     console.log("resp=" + resp);
     return res.json(resp);
   });
@@ -42,6 +55,12 @@ module.exports = function (app) {
     var resp = ibmGraphSvc.loadIssuesData();
     console.log("resp=" + resp);
     return res.json(resp);
+  });
+
+  app.post('/cf/cc/uploadFile', function(req, res, next) {
+    var resp = ibmObjectStorageSvc.uploadFile(req, res);
+    // console.log("resp=" + resp);
+    // return res.json(resp);
   });
 
 

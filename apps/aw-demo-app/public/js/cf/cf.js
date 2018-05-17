@@ -33,9 +33,21 @@ $(document).ready(function() {
 
   });
 
+  $('#prepareEdgesButton').click(function() {
+    console.log('Clicked Prepare Edges button' );
+    prepareEdgesData();
+
+  });
+
   $('#loadEdgesButton').click(function() {
     console.log('Clicked load Edges button' );
     loadEdgesData();
+
+  });
+
+  $('#prepareIssuesButton').click(function() {
+    console.log('Clicked Prepare Issues button' );
+    prepareIssuesData();
 
   });
 
@@ -56,6 +68,11 @@ $(document).ready(function() {
     stopConsumer();
   });
 
+  // $('#uploadFileButton').click(function() {
+  //   console.log('Clicked uploadFileButton' );
+  //   uploadFile();
+  // });
+
 
 
   function loadVertexData(){
@@ -72,6 +89,28 @@ $(document).ready(function() {
   function loadEdgesData(){
     $.ajax({
       url: "/cf/cc/loadEdgesData",
+      type: "POST",
+      cache: false,
+      dataType: "json"
+    }).success(function(data) {
+      console.log(data);
+    }).fail(_error);
+  }
+
+  function prepareEdgesData(){
+    $.ajax({
+      url: "/cf/cc/prepareEdgesData",
+      type: "POST",
+      cache: false,
+      dataType: "json"
+    }).success(function(data) {
+      console.log(data);
+    }).fail(_error);
+  }
+
+  function prepareIssuesData(){
+    $.ajax({
+      url: "/cf/cc/prepareIssuesData",
       type: "POST",
       cache: false,
       dataType: "json"
@@ -148,6 +187,17 @@ $(document).ready(function() {
       data: '{"id":' + JSON.stringify(graphId) + '}'
     }).success(function(data) {
       console.log("Create Graph successful" + data);
+    }).fail(_error);
+  }
+
+  function uploadFile(){
+    $.ajax({
+      url: "/cf/cc/uploadFile",
+      type: "POST",
+      cache: false,
+      dataType: "json"
+    }).success(function(data) {
+      console.log(data);
     }).fail(_error);
   }
 

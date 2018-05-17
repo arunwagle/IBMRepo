@@ -1,0 +1,28 @@
+{
+  "name": "CSVModel",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "file": {
+      "type": "buffer",
+      "required": false,
+      "updateResource": {
+        "id": "common.CSVModel.file",
+        "modelId": "common.CSVModel",
+        "facetName": "common",
+        "name": "file",
+        "type": "buffer",
+        "required": false
+      },
+      "$promise": {},
+      "$resolved": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

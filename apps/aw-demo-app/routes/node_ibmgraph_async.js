@@ -14,14 +14,20 @@ var username;
 var password;
 var baseURL;
 // TODO - Remove hard coding
-var gName = "gtest20";
-var deleteGraphName = "gtest20"
+var gName = "gtest35";
+var deleteGraphName = "gtest35"
 
 
 // cloudant
 var db_vertexes;
 var db_edges;
 var db_issuelist;
+var totalEdges;
+var limit = 5000;
+var skip = 0;
+var pendingEdges=0;
+var processedEdges=0;
+var concurrentRequest = 2000;
 
 // Retrieve Graph API from VCAP services
 if (process.env.VCAP_SERVICES) {
@@ -45,6 +51,13 @@ if (process.env.VCAP_SERVICES) {
   db_vertexes = cloudant.db.use("db_cf_cc_vertexes_lar_ref");
   db_edges = cloudant.db.use("db_cf_cc_edges_lar_ref");
   db_issuelist = cloudant.db.use("db_cf_cc_issue_list_lar");
+
+  db_edges.view('totalEdgesDesign', 'totalEdges', {reduce:true}, function(err, body) {
+    if (!err) {
+      totalEdges = body.rows[0].value;
+      console.log("*****totalEdges*****" + totalEdges);
+    }
+  });
 
   // Message HUM Configurations
   // var messagehubService = 'messagehub';
@@ -138,76 +151,52 @@ var deleteVertex=function deleteVertex(graphName, data){
 
 
 var loadVertexData=function loadVertexData(){
-  // console.log('##################CALING loadVertexData: %s');
-  // selector:{type:'vertex'}
-  db_vertexes.find({selector:{type:'vertex', processVertex:true}}).then(function(cldVArr){
-    console.log('Finddddd: %s', JSON.stringify(cldVArr));
-    return Promise.all(cldVArr.docs.map(function (row) {
-      // console.log('loadVertexData:Document id: %s', JSON.stringify(row));
-      return iCreateVertex (gName, row);
-    }));
-
+  // var t0 = performance.now();
+  var hrstart = process.hrtime();
+  console.log("API:loadVertexData:START ");
+  // type:'vertex',
+  db_vertexes.find({selector:{"processVertex":true}}).then(function(cldV){
+    console.log("API:loadVertexData: Total Vertexes  " + cldV.docs.length);
+    return Promise.map(cldV.docs, function(row){
+        return iCreateVertex (gName, row);
+    }, {concurrency: 100});
     // return getSampleVertexes();
-    // return cldVArr;
-
   }).then(function (grphVArr) {
-    console.log("All Vertexes processed now:grphVArr: Processed in Graph DB " );
-    // JSON.stringify(grphVArr)
+    // console.log("====All Vertexes processed now:grphVArr: Processed in Graph DB " + JSON.stringify(grphVArr));
+    // var t1 = performance.now();
+    var t1 = process.hrtime(hrstart);
+    console.log("API:loadVertexData: All Vertexes created in Graph DB in " + (t1[0]) + " seconds.");
+    var vertexPromise = Promise.map(grphVArr, function(row){
+        // console.log("Vertex: row " + JSON.stringify(row));
+        // graph id of the Vertex
+        var gId = row.data[0].id;
+        // cloudant id of the vertex
+        var cId = row.data[0].properties.pid[0].value;
 
-    var vertexPromise = Promise.all(grphVArr.map(function (row) {
-      return iUpdateVertexesInCloudant(row);
-    }));
-
-    // update issue data with the graph id for month.
-    var issuePromise = Promise.all(grphVArr.map(function (row) {
-      return iUpdateIssuesInCloudant(row);
-    }));
-
-
-    var updateEdgePromise = Promise.all(grphVArr.map(function (row) {
-
-      var gId = row.data[0].id;
-      var cId = row.data[0].properties.pid[0].value;
-      var cRev = row.data[0].properties.rev[0].value;
-
-      // {selector:{type:'edge', source_id: cId}}
-      return db_edges.find({selector:{source_id: cId}}).then(function(srcIdEArr){
-        return Promise.all(srcIdEArr.docs.map(function (doc) {
-            doc.gSrcId=gId;
-            return iEdgePromiseFactory(doc);
-        }));
-      }).then(function(edgeSrcPromiseFactories){
-        return iExecuteSequentially(edgeSrcPromiseFactories);
-      }).then(function(results){
-        // {selector:{type:'edge', target_id: cId}}
-        db_edges.find({selector:{target_id: cId}}).then(function(tgtIdEArr){
-          return Promise.all(tgtIdEArr.docs.map(function (doc) {
-            doc.gTgtId=gId;
-            return iEdgePromiseFactory(doc);
-          }));
-        }).then(function(edgeTgtPromiseFactories){
-          return iExecuteSequentially(edgeTgtPromiseFactories);
-        }).then(function(finalResults){
-            return finalResults;
-        }).catch(function (err) {
-          console.log("Edge target update error : " + err);
+        // read the vertex document
+        var readDocPromise = db_vertexes.get(cId);
+        return readDocPromise.then(function(doc){
+          // console.log('getttt: %s', JSON.stringify(doc));
+          doc.gid=gId;
+          return doc;
         });
-      }).catch(function (err) {
-        console.log("Global Edge update error : " + err);
-      });;
-
-    }));
-
+    }, {concurrency: 100}).then(function(updateDocumentArr) {
+      return Promise.map(updateDocumentArr, function(doc){
+          // console.log("Vertex: row " + JSON.stringify(doc));
+          var updateDocPromise = db_vertexes.insert(doc);
+          return updateDocPromise;
+      }, {concurrency: 100});
+    });
     return Q.all([
-      vertexPromise,
-      issuePromise,
-      updateEdgePromise
+      vertexPromise
     ]);
 
-  }).then(function (cldVArr) {
-      console.log('#################cldVArr: len %s###########', "Load Vertex Request Processed");
+  }).then(function(updateDocumentArr) {
+    var t2 = process.hrtime(hrstart);
+    // console.log("updateDocumentArr:  " + JSON.stringify(updateDocumentArr));
+    console.log("Done: API:loadVertexData: All Vertexes updated with Graph Ids in Cloudant: Total Docs updated:  " + updateDocumentArr[0].length + " in " + (t2[0]) + " seconds.");
   }).catch(function(err) {
-    console.log('something went wrong', err);
+    console.log('API:loadVertexData: something went wrong', err);
   });
 
 
@@ -216,16 +205,87 @@ var loadVertexData=function loadVertexData(){
 
 
 // START: Load Edges data from Cloudant
-var loadEdgesData=function loadEdgesData(){
+var prepareEdgesData=function prepareEdgesData(){
   // {selector:{type:'edge'}}
+  //type:'edge',
+  var hrstart = process.hrtime();
+  console.log("API:prepareEdgesData:START ");
+  //, "limit": limit, "skip": skip
+  db_edges.find({selector:{"type": "edge"}}).then(function(cldEArr){
+    console.log('prepareEdgesData: find esges len = ', cldEArr.docs.length);
+    return Promise.map(cldEArr.docs, function (row) {
+      // console.log(' Edge Docs: row', row);
+      var readSourcePromise = db_vertexes.find({selector:{_id:row.source_id}});
+      return readSourcePromise.then(function(result){
+        var gSrcId = result.docs[0].gid;
+        // console.log('1. vertex g_source_id=', g_source_id);
+        row.gSrcId=gSrcId;
+        return row;
+      }).then(function(row){
+          var t1 = process.hrtime(hrstart);
+          console.log("API:prepareEdgesData: Edges updated with source graphId in " + (t1[0]) + " seconds.");
+          var readTargetPromise = db_vertexes.find({selector:{_id:row.target_id}});
+          return readTargetPromise.then(function(result){
+            var gTgtId = result.docs[0].gid;
+            row.gTgtId=gTgtId;
+            return row;
+          });
+      }).catch(function(err) {
+        console.log('1...something went wrong', err);
+        return err;
+      });;
+
+    },{concurrency: concurrentRequest});
+  }).then(function(edgeDocs){
+    var t2 = process.hrtime(hrstart);
+    console.log("API:prepareEdgesData: Edges updated with target graphId in " + (t2[0]) + " seconds.");
+    // console.log('Edge Documents: %s', JSON.stringify(edgeDocs));
+    // return Promise.map(edgeDocs, function (row) {
+    //     var updateDocPromise = db_edges.insert(row);
+    //     return updateDocPromise;
+    // },{concurrency: concurrentRequest});
+    return db_edges.bulk({docs:edgeDocs}).then(function(cldEArr){
+        return cldEArr;
+    });
+
+  }).then(function(updatedEdgeDocs){
+    // processedEdges+=limit;
+    // skip=processedEdges;
+    // pendingEdges=totalEdges - processedEdges;
+    // if(pendingEdges < limit){
+    //   limit = pendingEdges;
+    // }
+    // console.log('processedEdges:' + processedEdges + " skip:" + skip + " pendingEdges:" + pendingEdges + " limit:" + limit);
+    var t3 = process.hrtime(hrstart);
+    console.log("API:prepareEdgesData: Edges updated successfully in Cloudant in " + (t3[0]) + " seconds.");
+
+    console.log('Edges Updated successfully');
+  }).catch(function(err) {
+    console.log('something went wrong', err);
+    return err;
+  });
+
+  return "prepare EdgesData Data Request Sent";
+
+}
+
+var loadEdgesData=function loadEdgesData(){
+  var hrstart = process.hrtime();
+  console.log("API:loadEdgesData:START ");
+
   db_edges.find({selector:{type:'edge'}}).then(function(cldEArr){
     // console.log('result= ', JSON.stringify(cldEArr));
 
-    return Promise.all(cldEArr.docs.map(function (row) {
+    return Promise.map(cldEArr.docs, function (row) {
       // console.log('Edge Document id: %s', JSON.stringify(row));
       return iCreateEdge (gName, row);
-    }));
+    },{concurrency: concurrentRequest});
 
+  }).then(function(updatedEdgeDocs){
+    var t2 = process.hrtime(hrstart);
+    console.log("API:loadEdgesData: Edges created successfully in GraphDB in " + (t2[0]) + " seconds.");
+
+    console.log('Edges loaded into graph db successfully');
   }).catch(function(err) {
     console.log('something went wrong', err);
     return err.message;
@@ -236,23 +296,96 @@ var loadEdgesData=function loadEdgesData(){
 }
 // END: Load Edges data from Cloudant
 
+
+var prepareIssuesData=function prepareIssuesData(){
+  var hrstart = process.hrtime();
+  console.log("API:prepareIssuesData:START ");
+
+  db_vertexes.find({selector:{type:'vertex', "label": {"$eq": "month"}}}).then(function(cldEArr){
+    console.log('prepareIssuesData: find month vertex len = ', cldEArr.docs.length);
+    return Promise.map(cldEArr.docs, function(row){
+        // console.log("Vertex: row " + JSON.stringify(row));
+        // graph id of the Vertex
+        var gId = row.gid;
+        // cloudant id of the vertex
+        var cId = row._id;
+
+        // read the issue document
+        var readDocPromise = db_issuelist.find({selector:{type:'issue', month_id:cId}});
+        return readDocPromise.then(function(issueArr){
+          // console.log('getttt: %s', JSON.stringify(issueArr));
+          var updateDocPromiseArr = [];
+          for (var i = 0; i < issueArr.docs.length; i++) {
+            var doc = issueArr.docs[i];
+            doc.g_month_id = gId;
+            updateDocPromiseArr.push(doc);
+          }
+          return updateDocPromiseArr;
+        });
+
+    }, {concurrency: concurrentRequest});
+
+  }).then(function(documentArr){
+    var t2 = process.hrtime(hrstart);
+    console.log("API:prepareIssuesData: Issues updates successfully in memory with month graph ids " + (t2[0]) + " seconds.");
+    return Promise.filter(documentArr, function(row){
+      // console.log('row and typeof value   %s', JSON.stringify(row) + " typeof" + typeof row._id);
+      return row.length > 0;
+    }, {concurrency: concurrentRequest}).reduce(function(prev, cur){
+        return prev.concat(cur);
+    }, []);
+  }).then(function(issuesDocs){
+    var t3 = process.hrtime(hrstart);
+    console.log("API:prepareIssuesData: Issues filtered successfully in memory with month graph ids " + (t3[0]) + " seconds.");
+
+    console.log('prepareIssuesData: fissuesDocs len = ', issuesDocs.length);
+    // Dive array into subArrays as bulk update has limit with the size of request data
+    var subDocsArr = [];
+    while(issuesDocs.length) {
+      subDocsArr.push(issuesDocs.splice(0,50000));
+    }
+
+    return Promise.map(subDocsArr, function(subDocs){
+        var bulkUpdatePromise = db_issuelist.bulk({docs:subDocs});
+
+        return bulkUpdatePromise.then(function(bulkUpdateArr){
+          return bulkUpdateArr;
+        });
+    }, {concurrency: concurrentRequest});
+
+
+  }).then(function(updateDocumentArr) {
+    var t4 = process.hrtime(hrstart);
+    console.log("API:prepareIssuesData: Issues updates successfully in Cloudant month graph ids " + (t4[0]) + " seconds.");
+
+    console.log("Done: API:prepareIssuesData: Issues updated with Graph Ids ");
+  }).catch(function(err) {
+    console.log('API:prepareIssuesData: something went wrong', err);
+    return err;
+  });
+
+  return "API:prepareIssuesData: Data Request Sent";
+
+}
+
 // START: Load Edges data from Cloudant
 var loadIssuesData=function loadIssuesData(){
-  // {selector:{type:'edge'}}
-  db_issuelist.find({selector:{type:'issue'}}).then(function(cldIArr){
-    // console.log('result= ', JSON.stringify(cldEArr));
+  var hrstart = process.hrtime();
+  console.log("API:loadIssuesData:START ");
 
-    return Promise.all(cldIArr.docs.map(function (row) {
+  db_issuelist.find({selector:{type:'issue'}}).then(function(cldIArr){
+    console.log('loadIssuesData: find cldIArr len = ', cldIArr.docs.length);
+
+    return Promise.map(cldIArr.docs, function (row) {
       // console.log('Issues Document id: %s', JSON.stringify(row));
       return iCreateIssue (gName, row);
-    }));
-
-    // return  getSampleVertexes();
+    },{concurrency: concurrentRequest});
 
   }).then(function (grphVArr) {
-    // console.log("All Issue Vertexes processed now:grphVArr: len: " + JSON.stringify(grphVArr));
+    var t1 = process.hrtime(hrstart);
+    console.log("API:loadIssuesData: Issues vertex created in Graph:  " + gName + " in " + (t1[0]) + " seconds.");
 
-    return Promise.all(grphVArr.map(function (row) {
+    return Promise.map(grphVArr, function (row) {
 
       var gIssueId = row.data[0].id;
       var gMonthId = row.data[0].properties.g_month_id[0].value;
@@ -283,8 +416,13 @@ var loadIssuesData=function loadIssuesData(){
         return err;
       });
 
-    }));
+    },{concurrency: concurrentRequest});
 
+  }).then(function(updatedEdgeDocs){
+    var t2 = process.hrtime(hrstart);
+    console.log("API:loadIssuesData: Issues edges created in Graph:  " + gName + " in " + (t2[0]) + " seconds.");
+
+    console.log('Issues Updated successfully in Graph DB');
   }).catch(function(err) {
     console.log('loadIssuesData:something went wrong', err);
     return err.message;
@@ -321,11 +459,11 @@ function iCreateVertex(graphName, data){
     'label': data.label,
     'properties': {
         'name': data.name,
+        'type': data.label,
         'pid': data._id,
         'rev': data._rev
     }
   };
-
   var vertexCreateOpts = {
           method: 'POST',
           headers: {'Authorization': sessionToken},
@@ -518,5 +656,7 @@ module.exports.createSchema=createSchema;
 // module.exports.startConsumer=startConsumer;
 // module.exports.stopConsumer=stopConsumer;
 module.exports.loadVertexData=loadVertexData;
+module.exports.prepareEdgesData=prepareEdgesData;
 module.exports.loadEdgesData=loadEdgesData;
+module.exports.prepareIssuesData=prepareIssuesData;
 module.exports.loadIssuesData=loadIssuesData;

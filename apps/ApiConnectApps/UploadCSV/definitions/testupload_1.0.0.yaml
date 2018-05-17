@@ -1,0 +1,67 @@
+swagger: '2.0'
+info:
+  x-ibm-name: uploadCSV
+  title: uploadCSV
+  version: 1.0.0
+schemes:
+  - https
+host: $(catalog.host)
+basePath: /
+consumes:
+  - application/json
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+security:
+  - clientIdHeader: []
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+      - invoke:
+          title: ZillowDataByZip
+          timeout: 60
+          verb: GET
+          cache-response: protocol
+          cache-ttl: 900
+          stop-on-error:
+            - null
+          version: 1.0.0
+          target-url: >-
+            https://www.quandl.com/api/v3/datasets/ZILL/Z97102_PRR.csv?api_key=hV4S9ynS1N6M5segBLbk
+          output: csvData
+          description: Retrieve data from Zillow by zip code
+      - invoke:
+          title: copy
+          timeout: 60
+          verb: GET
+          cache-response: protocol
+          cache-ttl: 900
+          stop-on-error:
+            - null
+          version: 1.0.0
+          target-url: >-
+            https://dal.objectstorage.open.softlayer.com/v1/AUTH_9f2108032c4e44119f41ba96e9d83883/api/containers
+          secure-gateway: false
+  gateway: datapower-gateway
+paths:
+  /upload/csv:
+    get:
+      responses:
+        '200':
+          description: 200 OK
+          schema:
+            type: object
+      produces: []
+      consumes: []
+definitions: {}
+tags:
+  - name: Upload CSV
+    description: Upload CSV to Object Storage
+produces:
+  - application/csv

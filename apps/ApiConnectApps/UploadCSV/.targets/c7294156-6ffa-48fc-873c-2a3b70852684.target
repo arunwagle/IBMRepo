@@ -1,0 +1,84 @@
+type: bluemix
+server:
+  displayName: US South
+  name: us-south
+  host: us.apiconnect.ibmcloud.com
+org:
+  id: 5942fa9a0cf280944afdf97f
+  name: osnortharunwagleorg-development
+  displayName: OSNorth.Arun.Wagle.Org (Development)
+  orgType: apiProvider
+  status: active
+  advPortalOverride: true
+  extUaaAuthenticated: false
+  requiresSSLClientCertCheck: false
+  dormant: false
+  url: 'https://us.apiconnect.ibmcloud.com/v1/orgs/5942fa9a0cf280944afdf97f'
+  externalOrgId: b0c9182a-7366-4248-8a51-73caa6cfaa60
+  externalInviteOverride: 'https://console.ng.bluemix.net/apis/catalog/invitation'
+  externalSpaceId: b0c9182a-7366-4248-8a51-73caa6cfaa60
+  externalNativeOrgId: caeb8214-f3e0-4768-98cb-9df01ade5b0c
+  bluemix:
+    inviteUri: 'https://console.ng.bluemix.net/apis/catalog/invitation'
+    organization: caeb8214-f3e0-4768-98cb-9df01ade5b0c
+    space: b0c9182a-7366-4248-8a51-73caa6cfaa60
+catalog:
+  id: 5942fa9b0cf280944afdf98b
+  orgId: 5942fa9a0cf280944afdf97f
+  name: Sandbox
+  shortName: sb
+  owner:
+    id: 5942fa990cf280944afdf97c
+    username: arun.wagle@ibm.com
+    context: apimanager
+    idpId: 58341db4e63b1219f0f068d1
+    email: arun.wagle@ibm.com
+    firstName: Arun Wagle
+    lastName: ''
+    status: ACTIVE
+    lastLoginTime: '2017-06-20T16:24:54.454+0000'
+    url: 'https://us.apiconnect.ibmcloud.com/v1/users/5942fa990cf280944afdf97c'
+  apiCenter: false
+  portalType: BASIC
+  portalUrl: >-
+    https://developer.us.apiconnect.ibmcloud.com/osnortharunwagleorg-development/sb
+  advPortalUrl: >-
+    https://sb-osnortharunwagleorg-development.developer.us.apiconnect.ibmcloud.com
+  gatewayType: DataPowerGateway
+  gwServices:
+    - id: PRODAPIC_APIMGMT_GATEWAY
+      endpointUrl: >-
+        https://api.us.apiconnect.ibmcloud.com/osnortharunwagleorg-development/sb
+  idp: 5942fa9c0cf280944afdf98c
+  idps:
+    - 5942fa9c0cf280944afdf98c
+  availableRoles:
+    - developer
+    - viewer
+  default: false
+  autoDeploy: true
+  restrictedDeployment: false
+  invitationEnabled: true
+  selfSignUpEnabled: true
+  spaceEnabled: false
+  spaceIds:
+    - 5942fa9c0cf280944afdf994
+  testAppEnabled: true
+  testAppCredentials:
+    clientId: 58a53359-5dff-42d2-9b11-8bb6427c8ed2
+    clientSecret: X7hD4kE2mS1vW1pK1lI5mF0aO0mD6tR2tB4rC0pU4gI2iT3fF7
+  createdAt: '2017-06-15T21:22:36.606+0000'
+  updatedAt: '2017-06-15T21:22:36.606+0000'
+  createdBy: apim-ops@wwpdl.vnet.ibm.com
+  updatedBy: apim-ops@wwpdl.vnet.ibm.com
+  url: >-
+    https://us.apiconnect.ibmcloud.com/v1/orgs/5942fa9a0cf280944afdf97f/environments/5942fa9b0cf280944afdf98b
+  applicationLifecycleEnabled: false
+  productDeploymentApprovalRequiredStates: []
+  orgName: osnortharunwagleorg-development
+space:
+  none: true
+app:
+  none: true
+id: c7294156-6ffa-48fc-873c-2a3b70852684
+target: 1.0.0

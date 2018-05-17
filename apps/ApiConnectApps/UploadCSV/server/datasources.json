@@ -1,0 +1,16 @@
+{
+  "Bluemix Object Storage DS": {
+    "username": "admin_21f1d04dcb09beab274a3057dc54c445fff88cb8",
+    "password": "A[t9w{Kis?v^CAo9",
+    "name": "Bluemix Object Storage DS",
+    "connector": "storage",
+    "auth_url": "https://identity.open.softlayer.com",
+    "project": "object_storage_f7a67e45_0b3a_48db_9ce0_e28189a4ef6a",
+    "projectId": "9f2108032c4e44119f41ba96e9d83883",
+    "region": "dallas",
+    "userId": "818d185a34e84fefb273a5dd6b119c5e",
+    "domainId": "42811a9a4b9d4fdd8e7140aaee1fabe1",
+    "domainName": "1057641",
+    "role": "admin"
+  }
+}

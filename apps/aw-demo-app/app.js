@@ -18,12 +18,15 @@
 
   var express    = require('express'),
   app          = express(),
+  skipper = require('skipper'),
   watson       = require('watson-developer-cloud'),
   extend       = require('util')._extend,
   i18n         = require('i18next'),
   bodyParser   = require('body-parser'),
   Cloudant     = require('cloudant');
 
+  // agent = require('bluemix-autoscaling-agent');
+  app.use(require("skipper")());
 
 //i18n settings
 require('./config/i18n')(app);
@@ -80,6 +83,10 @@ app.get('/settings', function(req, res) {
 
 app.get('/watsonsettings', function(req, res) {
   res.render('watsonsettings');
+});
+
+app.get('/uploadsettings', function(req, res) {
+  res.render('uploadsettings');
 });
 
 app.get('/ah', function(req, res) {
