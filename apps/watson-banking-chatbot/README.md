@@ -142,52 +142,5 @@ TONE_ANALYZER_PASSWORD=<add_tone_analyzer_password>
 
 ![](doc/source/images/sample_output.png)
 
-# Links
 
-* [Demo on Youtube](https://www.youtube.com/watch?v=Jxi7U7VOMYg)
-* [Watson Node.js SDK](https://github.com/watson-developer-cloud/node-sdk)
-* [Relevancy Training Demo Video](https://www.youtube.com/watch?v=8BiuQKPQZJk)
-* [Relevancy Training Demo Notebook](https://github.com/akmnua/relevancy_passage_bww)
 
-# Troubleshooting
-
-* Error: Environment {GUID} is still not active, retry once status is active
-
-  > This is common during the first run. The app tries to start before the Discovery
-environment is fully created. Allow a minute or two to pass. The environment should
-be usable on restart. If you used `Deploy to IBM Cloud` the restart should be automatic.
-
-* Error: Only one free environment is allowed per organization
-
-  > To work with a free trial, a small free Discovery environment is created. If you already have
-a Discovery environment, this will fail. If you are not using Discovery, check for an old
-service thay you may want to delete. Otherwise use the .env DISCOVERY_ENVIRONMENT_ID to tell
-the app which environment you want it to use. A collection will be created in this environment
-using the default configuration.
-
-# License
-[Apache 2.0](LICENSE)
-
-# Privacy Notice
-If using the `Deploy to IBM Cloud` button some metrics are tracked, the following
-information is sent to [Deployment Tracker](https://github.com/IBM-Bluemix/cf-deployment-tracker-service) and
-[Metrics collector](https://github.com/IBM/metrics-collector-service) service on each deployment:
-
-* Node.js package version
-* Node.js repository URL
-* Application Name (`application_name`)
-* Application GUID (`application_id`)
-* Application instance index number (`instance_index`)
-* Space ID (`space_id`)
-* Application Version (`application_version`)
-* Application URIs (`application_uris`)
-* Cloud Foundry API (`cf_api`)
-* Labels of bound services
-* Number of instances for each bound service and associated plan information
-* Metadata in the repository.yaml file
-
-This data is collected from the `package.json` and `repository.yaml` file in the sample application and the `VCAP_APPLICATION` and `VCAP_SERVICES` environment variables in IBM Cloud and other Cloud Foundry platforms. This data is used by IBM to track metrics around deployments of sample applications to IBM Cloud to measure the usefulness of our examples, so that we can continuously improve the content we offer to you. Only deployments of sample applications that include code to ping the Deployment Tracker service will be tracked.
-
-## Disabling Deployment Tracking
-
-To disable tracking, simply remove ``require("cf-deployment-tracker-client").track();`` and ``require('metrics-tracker-client').track();`` from the ``app.js`` file in the top level directory.
