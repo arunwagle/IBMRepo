@@ -84,12 +84,12 @@ Edit the `.env` file with the necessary settings.
 
 ```
 
-### Watson Assistant
+##### Watson Assistant
 WORKSPACE_ID=<add_conversation_workspace>
 
 
-### Run locally on a non-default port (default is 3000)
-### PORT=3000
+##### Run locally on a non-default port (default is 3000)
+##### PORT=3000
 
 ```
 
