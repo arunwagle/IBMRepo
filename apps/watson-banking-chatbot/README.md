@@ -1,15 +1,15 @@
 # Create a banking chatbot for RPA
 In this developer journey, we will create a chatbot using Node.js and Watson Assistant. 
 
-Learn how to
-
+### Learn how to
 * Create a chatbot that converses via a web UI using Watson Assistant and Node.js
 
-Final State architecture
+# Final State architecture. 
+Currently we have created a simple chatbot but eventually we will acheive the below architecture
 ![](doc/source/images/architecture.png)
 
 ## Flow
-1. The user interacts with a chatbot via the app UI.
+1. The user interacts with a chatbot via the nodejs app UI.
 2. The dialogs is hardcoded to answer specific questions but will be enhanced to use other features like Watson Conversation, database interactons as we movealong this journey.
 
 ## Included components
@@ -22,28 +22,14 @@ Final State architecture
 # Steps
 
 ## Deploy to IBM Cloud
-[![Deploy to Bluemix](https://metrics-tracker.mybluemix.net/stats/527357940ca5e1027fbf945add3b15c4/button.svg)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-banking-chatbot.git)
-
-1. Press the above ``Deploy to IBM Cloud`` button and then click on ``Deploy``.
-
-2. In Toolchains, click on ``Delivery Pipeline`` to watch while the app is deployed. Once deployed, the app can be viewed by clicking ``View app.
-![](doc/source/images/toolchain-pipeline.png)
-
-3. To see the app and services created and configured for this journey, use the Bluemix dashboard. The app is named `watson-banking-chatbot` with a unique suffix. The following services are created and easily identified by the `wbc-` prefix:
-    * wbc-conversation-service
-    * wbc-discovery-service
-    * wbc-natural-language-understanding-service
-    * wbc-tone-analyzer-service
 
 ## Run locally
 > NOTE: These steps are only needed when running locally instead of using the ``Deploy to IBM Cloud`` button.
 
 1. [Clone the repo](#1-clone-the-repo)
 2. [Create Watson services with IBM Cloud](#2-create-watson-services-with-ibm-bluemix)
-3. [Import the Watson Assistant workspace](#3-import-the-conversation-workspace)
-4. [Load the Discovery documents](#4-load-the-discovery-documents)
-5. [Configure credentials](#5-configure-credentials)
-5. [Run the application](#6-run-the-application)
+3. [Configure credentials](#5-configure-credentials)
+4. [Run the application](#6-run-the-application)
 
 ### 1. Clone the repo
 
