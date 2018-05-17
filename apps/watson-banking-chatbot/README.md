@@ -83,15 +83,13 @@ Refer to the `.env` file. You will have to modify the workspace id accordingly.
 Edit the `.env` file with the necessary settings.
 
 ```
-# Replace the credentials here with your own.
-# Rename this file to .env before starting the app.
 
-# Watson Assistant
+### Watson Assistant
 WORKSPACE_ID=<add_conversation_workspace>
 
 
-# Run locally on a non-default port (default is 3000)
-# PORT=3000
+### Run locally on a non-default port (default is 3000)
+### PORT=3000
 
 ```
 
