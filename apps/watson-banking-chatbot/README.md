@@ -1,53 +1,25 @@
-[![Build Status](https://travis-ci.org/IBM/watson-banking-chatbot.svg?branch=master)](https://travis-ci.org/IBM/watson-banking-chatbot)
-![Bluemix Deployments](https://metrics-tracker.mybluemix.net/stats/527357940ca5e1027fbf945add3b15c4/badge.svg)
+# Create a banking chatbot for RPA
+In this developer journey, we will create a chatbot using Node.js and Watson Assistant. 
 
-*Read this in other languages: [中国](README-cn.md).*
-
-> Watson Conversation is now Watson Assistant. Although some images in this code pattern may show the service as Watson Conversation, the steps and processes will still work.
-
-# Create a banking chatbot with FAQ discovery, anger detection and natural language understanding
-In this developer journey, we will create a chatbot using Node.js and Watson Assistant. The Assistant flow will be enhanced by using Natural Language Understanding to identify entities and using Tone Analyzer to detect customer emotions. For FAQs, a call to the Discovery service will use passage retrieval to pull answers from a collection of documents.
-
-When the reader has completed this journey, they will understand how to:
+Learn how to
 
 * Create a chatbot that converses via a web UI using Watson Assistant and Node.js
-* Use Watson Discovery with passage retrieval to find answers in FAQ documents
-* Use Watson Tone Analyzer to detect emotion in a conversation
-* Identify entities with Watson Natural Language Understanding
 
+Final State architecture
 ![](doc/source/images/architecture.png)
 
 ## Flow
-1. The FAQ documents are added to the Discovery collection.
-2. The user interacts with a chatbot via the app UI.
-3. User input is processed with Tone Analyzer to detect anger. An anger score is added to the context.
-4. User input is processed with Natural Language Understanding (NLU). The context is enriched with NLU-detected entities and keywords (e.g., a location).
-5. The input and enriched context is sent to Assistant. Assistant recognizes intent, entities and dialog paths. It responds with a reply and/or action.
-6. Optionally, a requested action is performed by the app. This may include one of the following:
-   * Lookup additional information from bank services to append to the reply
-   * Use Discovery to reply with an answer from the FAQ documents
-
-## With Watson
-
-Want to take your Watson app to the next level? Looking to leverage Watson Brand assets? Join the [With Watson](https://www.ibm.com/watson/with-watson) program which provides exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
+1. The user interacts with a chatbot via the app UI.
+2. The dialogs is hardcoded to answer specific questions but will be enhanced to use other features like Watson Conversation, database interactons as we movealong this journey.
 
 ## Included components
 
 * [IBM Watson Assistant](https://www.ibm.com/watson/developercloud/conversation.html): Build, test and deploy a bot or virtual agent across mobile devices, messaging platforms, or even on a physical robot.
-* [IBM Watson Discovery](https://www.ibm.com/watson/developercloud/discovery.html): A cognitive search and content analytics engine for applications to identify patterns, trends, and actionable insights.
-* [IBM Watson Natural Language Understanding](https://www.ibm.com/watson/developercloud/natural-language-understanding.html): Analyze text to extract meta-data from content such as concepts, entities, keywords, categories, sentiment, emotion, relations, semantic roles, using natural language understanding.
-* [IBM Watson Tone Analyzer](https://www.ibm.com/watson/developercloud/speech-to-text.html): Uses linguistic analysis to detect communication tones in written text.
 
 ## Featured technologies
 * [Node.js](https://nodejs.org/): An asynchronous event driven JavaScript runtime, designed to build scalable applications.
 
-# Watch the Video
-
-[![](http://img.youtube.com/vi/Jxi7U7VOMYg/0.jpg)](https://www.youtube.com/watch?v=Jxi7U7VOMYg)
-
 # Steps
-
-Use the ``Deploy to IBM Cloud`` button **OR** create the services and run locally.
 
 ## Deploy to IBM Cloud
 [![Deploy to Bluemix](https://metrics-tracker.mybluemix.net/stats/527357940ca5e1027fbf945add3b15c4/button.svg)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-banking-chatbot.git)
